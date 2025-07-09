@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARNING</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+            background-image: 
+                url('https://i.imgur.com/jQ6WFZf.jpg'),
+                linear-gradient(to bottom, #400000, #000000);
+            background-blend-mode: hard-light;
+            background-size: cover;
+            font-family: 'Arial Black', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: none;
+        }
+
+        .scary-text {
+            font-size: 8vw;
+            text-align: center;
+            color: #ff0000;
+            text-shadow: 
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000,
+                0 0 40px #ff0000;
+            animation: 
+                pulse 1.5s infinite alternate,
+                shake 0.5s infinite alternate;
+            position: relative;
+            z-index: 10;
+            mix-blend-mode: lighten;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .creepy-image {
+            position: absolute;
+            opacity: 0.8;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .image1 {
+            top: 10%;
+            left: 10%;
+            width: 150px;
+            animation-delay: 0s;
+        }
+
+        .image2 {
+            bottom: 15%;
+            right: 15%;
+            width: 200px;
+            animation-delay: 3s;
+        }
+
+        .image3 {
+            top: 30%;
+            right: 20%;
+            width: 100px;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .blood-drips {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .drip {
+            position: absolute;
+            width: 2px;
+            background: rgba(255, 0, 0, 0.6);
+            animation: drip 8s linear infinite;
+        }
+
+        @keyframes drip {
+            0% { height: 0; top: 0; }
+            50% { height: 50px; opacity: 0.8; }
+            100% { height: 0; top: 100px; opacity: 0; }
+        }
+
+        .cursor {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: url('https://i.imgur.com/6Q4TQ9L.png') no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .pentagram {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: url('https://i.imgur.com/8Q9QZ9F.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.3;
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .flames {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: url('https://i.imgur.com/9Q9QZ9F.png') repeat-x;
+            background-size: contain;
+            animation: flicker 2s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="pentagram"></div>
+    
+    <div class="scary-text">XYMA66 WILL CATCH YOU!!</div>
+    
+    <img src="https://i.imgur.com/6Q4TQ9L.png" class="creepy-image image1" alt="Creepy face">
+    <img src="https://i.imgur.com/8Q9QZ9F.png" class="creepy-image image2" alt="Demon">
+    <img src="https://i.imgur.com/jQ6WFZf.jpg" class="creepy-image image3" alt="666">
+    
+    <div class="blood-drips" id="bloodDrips"></div>
+    <div class="flames"></div>
+    <div class="cursor" id="cursor"></div>
+
+    <script>
+        // Create blood drips
+        const bloodDrips = document.getElementById('bloodDrips');
+        for (let i = 0; i < 20; i++) {
+            const drip = document.createElement('div');
+            drip.classList.add('drip');
+            drip.style.left = Math.random() * 100 + 'vw';
+            drip.style.animationDelay = Math.random() * 8 + 's';
+            bloodDrips.appendChild(drip);
+        }
+
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Random whispers sound
+        setTimeout(() => {
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-creepy-whispers-566.mp3');
+            audio.volume = 0.3;
+            audio.play();
+        }, 3000);
+
+        // Random scream after 10 seconds
+        setTimeout(() => {
+            if (Math.random() > 0.5) {
+                const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-woman-screams-pain-1510.mp3');
+                audio.volume = 0.4;
+                audio.play();
+            }
+        }, 10000);
+
+        // Background flicker
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                document.body.style.backgroundColor = '#110000';
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '#000';
+                }, 100);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
